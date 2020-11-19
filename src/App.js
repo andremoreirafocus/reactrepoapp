@@ -14,21 +14,21 @@ function App() {
       techs: ["ReactJS",  "Javascript"],
     };
 
-    const response = api.post('repositories', repository);
+    const response = await api.post('repositories', repository);
     if (response.status === 201) {
       console.log('Repository created!');
+      const repository = response.data;
       setRepositories([...repositories, repository]);
     }
   }
 
   async function handleRemoveRepository(id) {
-    api.delete(`repositories/${id}`).then(response => {
-      console.log(response);
-      if (response.status === 204 ) {
-        console.log('Removido com sucesso!');
-        setRepositories(repositories.filter(repository => repository.id !== id));
-      }
-    })
+    const response = await api.delete(`repositories/${id}`)
+    console.log(response);
+    if (response.status === 204 ) {
+      console.log('Removido com sucesso!');
+      setRepositories(repositories.filter(repository => repository.id !== id));
+    }
   }
 
   useEffect(() => {
