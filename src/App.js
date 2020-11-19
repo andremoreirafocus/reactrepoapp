@@ -9,7 +9,7 @@ function App() {
 
   async function handleAddRepository() {
     const repository = {
-      title: `Projeto Pessoal #${(Math.random() * 32).toFixed(0)} `,
+      title: `Projeto Pessoal #${(Math.random() * 972).toFixed(0)} `,
       url: 'https://github.com/andremoreirafocus/reactbasicapp',
       techs: ["ReactJS",  "Javascript"],
     };
