@@ -15,6 +15,7 @@ function App() {
     };
 
     const response = await api.post('repositories', repository);
+
     if (response.status === 201) {
       console.log('Repository created!');
       const repository = response.data;
@@ -26,7 +27,7 @@ function App() {
     const response = await api.delete(`repositories/${id}`)
     console.log(response);
     if (response.status === 204 ) {
-      console.log('Removido com sucesso!');
+      console.log('Repository removed!');
       setRepositories(repositories.filter(repository => repository.id !== id));
     }
   }
