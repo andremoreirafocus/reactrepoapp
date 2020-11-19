@@ -8,19 +8,18 @@ function App() {
   const [repositories, setRepositories] = useState([]);
 
   async function handleAddRepository() {
-    const repository = {
+
+    const response = await api.post('repositories', {
       title: `Projeto Pessoal #${(Math.random() * 972).toFixed(0)} `,
       url: 'https://github.com/andremoreirafocus/reactbasicapp',
-      techs: ["ReactJS",  "Javascript"],
-    };
+      techs: ["React",  "Javascript"],
+    });
 
-    const response = await api.post('repositories', repository);
-
-    if (response.status === 201) {
+     if (response.status === 200) {
       console.log('Repository created!');
       const repository = response.data;
       setRepositories([...repositories, repository]);
-    }
+     }
   }
 
   async function handleRemoveRepository(id) {
@@ -36,7 +35,7 @@ function App() {
     api.get('repositories').then(response => {
       setRepositories(response.data);
     });
-  }, [repositories]);
+  }, []);
 
   return (
     <div>
