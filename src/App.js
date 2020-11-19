@@ -8,21 +8,34 @@ function App() {
   const [repositories, setRepositories] = useState([]);
 
   async function handleAddRepository() {
-    // TODO
+    const repository = {
+      title: `Projeto Pessoal #${(Math.random() * 32).toFixed(0)} `,
+      url: 'https://github.com/andremoreirafocus/reactbasicapp',
+      techs: ["ReactJS",  "Javascript"],
+    };
+
+    const response = api.post('repositories', repository);
+    if (response.status === 201) {
+      console.log('Repository created!');
+      setRepositories([...repositories, repository]);
+    }
   }
 
   async function handleRemoveRepository(id) {
-    // TODO
+    api.delete(`repositories/${id}`).then(response => {
+      console.log(response);
+      if (response.status === 204 ) {
+        console.log('Removido com sucesso!');
+        setRepositories(repositories.filter(repository => repository.id !== id));
+      }
+    })
   }
 
   useEffect(() => {
     api.get('repositories').then(response => {
       setRepositories(response.data);
-      console.log(response);
-      console.log('repositories');
-      console.log(repositories);
     });
-  }, [])
+  }, [repositories]);
 
   return (
     <div>
@@ -30,7 +43,7 @@ function App() {
         {repositories.map(repository => {
           return (
           <li key={repository.id}> {repository.title}
-            <button onClick={() => handleRemoveRepository(1)}>Remover</button>
+            <button onClick={() => handleRemoveRepository(repository.id)}>Remover</button>
           </li> )
         })}
       </ul>
